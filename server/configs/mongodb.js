@@ -1,13 +1,17 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
-const connectDB=async ()=>{
+const connectDB = async () => {
+  try {
+    mongoose.connection.on("connected", () => {
+      console.log("Database is connected successfully");
+    });
 
-    mongoose.connection.on('connected',()=>{
-        console.log("db is connected");
-    })
+    await mongoose.connect(`${process.env.MONGODB_URI}/bg-removal`);
+  } catch (error) {
+    console.error(`Database connection failed: ${error.message}`);
+    process.exit(1); // Exit the process with failure
+  }
+};
 
-    await mongoose.connect(`${process.env.MONGODB_URI}/bg-removal`)
-}
-
-
-export default connectDB;
+// Export the connectDB function using CommonJS syntax
+module.exports = connectDB;
