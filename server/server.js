@@ -18,7 +18,7 @@ app.use(cors());
 app.get("/", (req, res) => {
   res.send("Hello! The server is running.");
 });
-app.use("/api/user", userRouter);
+app.use("/api/user", userRouter)
 
 // Start the server and connect to the database
 connectDB()
